@@ -17,12 +17,18 @@ enum MemberType {
 @export var collision: CollisionShape3D
 
 var destroyed: bool = false
+var base_HP
+
+func _ready() -> void:
+	base_HP = HP
 
 func _physics_process(delta: float) -> void:
 	if HP <= 0:
 		destroy()
 	if destroyed:
 		start_oil_leak(delta)
+	if HP < base_HP:
+		robot.look_at_player = true
 
 func destroy() -> void:
 	destroyed = true

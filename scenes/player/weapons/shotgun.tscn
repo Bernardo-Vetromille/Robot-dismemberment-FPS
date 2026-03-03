@@ -90,7 +90,7 @@ stream = ExtResource("2_0ivaw")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, -0.245, -0.09)
 
 [node name="shotgun" parent="visual" unique_id=263927211 instance=ExtResource("3_xwnbh")]
-transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, -0.0062595904, -0.24708498)
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, -0.0062595904, -0.024768561)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="visual" unique_id=819691882]
 libraries/ = SubResource("AnimationLibrary_0owmy")

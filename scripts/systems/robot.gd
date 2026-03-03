@@ -10,7 +10,7 @@ class_name Robot3D
 @export var floor_ray: RayCast3D
 @export var vision_ray: RayCast3D
 @export var vision_area: Area3D
-
+@export var look_at_player: bool
 
 var base_speed: float
 var members: Array[Member3D]
@@ -129,11 +129,5 @@ func vision():
 			if collider.is_in_group("player"):
 				head.look_at(collider.global_position)
 	
-	var count := 0
-	for m in members:
-		if !m.destroyed:
-			count += 1
-	if members_alive > count:
+	if look_at_player:
 		head.look_at(nf_player.global_position)
-	
-	members_alive = count

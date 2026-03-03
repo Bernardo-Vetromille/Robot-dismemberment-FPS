@@ -83,6 +83,9 @@ func equip(weapon: Weapon3D):
 		if child is Weapon3D:
 			if child != weapon: 
 				child.visible = false
+				child.reset_weapon()
+			elif child == weapon:
+				child.visible = true
 
 func weapons():
 	if Input.is_action_just_pressed("pistol"):

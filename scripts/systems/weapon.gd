@@ -39,6 +39,8 @@ func _physics_process(delta: float) -> void:
 			reload()
 		if reloading:
 			bullets_label.text = "Balas: " + "Recarregando..."
+		elif infinite_ammo:
+			bullets_label.text = "Balas: " + "infinitas"
 		else:
 			bullets_label.text = "Balas: " + str(remaining_bullets)
 
@@ -78,7 +80,6 @@ func reload():
 	remaining_bullets = bullets
 
 func reset_weapon() -> void:
-	remaining_bullets = bullets
 	can_shoot = true
 	reloading = false
 
