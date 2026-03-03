@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://cuhd04i6x72fs"]
+
+[ext_resource type="Script" uid="uid://djipt2jxjp1jm" path="res://scripts/systems/member3D.gd" id="1_r33xj"]
+
+[node name="Member3d" type="CharacterBody3D" unique_id=1890443083]
+script = ExtResource("1_r33xj")
+member_type = null
+lost_oil_per_second = null
+HP = null

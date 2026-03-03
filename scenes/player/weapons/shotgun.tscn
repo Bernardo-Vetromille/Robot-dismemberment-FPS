@@ -1,0 +1,105 @@
+[gd_scene format=3 uid="uid://db7imn6nh8k0g"]
+
+[ext_resource type="Script" uid="uid://bjjb2ndvmnbjb" path="res://scripts/systems/weapon.gd" id="1_opa0f"]
+[ext_resource type="AudioStream" uid="uid://cdjab7dvkjinr" path="res://assets/sounds/shotgun_shoot.mp3" id="2_0ivaw"]
+[ext_resource type="PackedScene" uid="uid://wnsxfj05q8ed" path="res://assets/models/shotgun.glb" id="3_xwnbh"]
+
+[sub_resource type="Animation" id="Animation_p47bc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.25, -0.245, -0.09)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("shotgun:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_75vfm"]
+resource_name = "shoot"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.13333334, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.25, -0.245, -0.09), Vector3(0.25, -0.245, -0.025), Vector3(0.25, -0.245, -0.09)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("shotgun:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.13333334, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(1.4835298, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0owmy"]
+_data = {
+&"RESET": SubResource("Animation_p47bc"),
+&"shoot": SubResource("Animation_75vfm")
+}
+
+[sub_resource type="BoxMesh" id="BoxMesh_p47bc"]
+size = Vector3(0.125, 0.125, 0.5)
+
+[node name="Shotgun" type="Node3D" unique_id=1677848092 node_paths=PackedStringArray("ray", "shoot_sound", "animation_player")]
+script = ExtResource("1_opa0f")
+fire_range = 30.0
+bullets = 2
+fire_rate = 0.5
+reload_time = 1.4
+ray = NodePath("RayCast3D")
+shoot_sound = NodePath("AudioStreamPlayer3D")
+damage = 30.0
+animation_player = NodePath("visual/AnimationPlayer")
+metadata/_custom_type_script = "uid://bjjb2ndvmnbjb"
+
+[node name="RayCast3D" type="RayCast3D" parent="." unique_id=1531964139]
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=467001496]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1725283, -0.11079966, -0.525765)
+stream = ExtResource("2_0ivaw")
+
+[node name="visual" type="Node3D" parent="." unique_id=1307886091]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, -0.245, -0.09)
+
+[node name="shotgun" parent="visual" unique_id=263927211 instance=ExtResource("3_xwnbh")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, -0.0062595904, -0.24708498)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="visual" unique_id=819691882]
+libraries/ = SubResource("AnimationLibrary_0owmy")
+
+[node name="arms" type="Node3D" parent="visual" unique_id=1352166958]
+
+[node name="rigth arm" type="MeshInstance3D" parent="visual/arms" unique_id=1579796924]
+mesh = SubResource("BoxMesh_p47bc")
+
+[node name="left arm" type="MeshInstance3D" parent="visual/arms" unique_id=1220509654]
+transform = Transform3D(0.76975113, 0.28016648, -0.57357645, -0.34202012, 0.9396926, 0, 0.53898555, 0.1961747, 0.81915206, -0.21, 0, 0)
+mesh = SubResource("BoxMesh_p47bc")

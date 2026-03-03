@@ -1,0 +1,219 @@
+[gd_scene format=3 uid="uid://cbu18dyr6x63t"]
+
+[ext_resource type="Script" uid="uid://d2crmmkok43hf" path="res://scripts/systems/robot.gd" id="1_uak8l"]
+[ext_resource type="Script" uid="uid://djipt2jxjp1jm" path="res://scripts/systems/member3D.gd" id="2_d45p8"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_28y7x"]
+size = Vector3(0.3, 0.3, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jrfea"]
+size = Vector3(0.3, 0.3, 0.3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d45p8"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_28y7x"]
+material = SubResource("StandardMaterial3D_d45p8")
+radius = 0.025
+height = 0.05
+
+[sub_resource type="Curve" id="Curve_jrfea"]
+_data = [Vector2(0, 0.97554094), 0.0, 0.0, 0, 0, Vector2(1, 0.6005018), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="BoxMesh" id="BoxMesh_ag8xu"]
+size = Vector3(0.5, 0.8, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s7hy8"]
+size = Vector3(0.5, 0.8, 0.3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rom7f"]
+size = Vector3(0.2, 0.6, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_83wnh"]
+size = Vector3(0.2, 0.6, 0.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bbghw"]
+size = Vector3(0.2, 0.6, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w54tn"]
+size = Vector3(0.2, 0.6, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d45p8"]
+size = Vector3(1, 1.9829636, 1)
+
+[node name="SimpleRobot" type="CharacterBody3D" unique_id=1242831548 node_paths=PackedStringArray("label", "head", "floor_ray", "vision_ray")]
+script = ExtResource("1_uak8l")
+oil = 25.0
+label = NodePath("Label3D")
+head = NodePath("head")
+floor_ray = NodePath("Floor_ray")
+vision_ray = NodePath("head/vision_ray")
+metadata/_custom_type_script = "uid://d2crmmkok43hf"
+
+[node name="head" type="CharacterBody3D" parent="." unique_id=1367062021 node_paths=PackedStringArray("oil_particles", "robot", "mesh", "collision")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.61435795, 0)
+script = ExtResource("2_d45p8")
+oil_particles = NodePath("CPUParticles3D")
+robot = NodePath("..")
+mesh = NodePath("MeshInstance3D")
+collision = NodePath("CollisionShape3D")
+metadata/_custom_type_script = "uid://djipt2jxjp1jm"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="head" unique_id=1762144130]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.017282724, 0)
+mesh = SubResource("BoxMesh_28y7x")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="head" unique_id=639816998]
+shape = SubResource("BoxShape3D_jrfea")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="head" unique_id=1577602028]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2186904, 0)
+emitting = false
+amount = 16
+local_coords = true
+mesh = SubResource("SphereMesh_28y7x")
+direction = Vector3(0, 1, 0)
+spread = 5.0
+initial_velocity_min = 2.0
+initial_velocity_max = 5.0
+scale_amount_curve = SubResource("Curve_jrfea")
+
+[node name="vision_ray" type="RayCast3D" parent="head" unique_id=1565736654]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03924954, 0)
+target_position = Vector3(0, 0, -20)
+
+[node name="torso" type="CharacterBody3D" parent="." unique_id=611698002 node_paths=PackedStringArray("robot", "mesh", "collision")]
+script = ExtResource("2_d45p8")
+member_type = 1
+robot = NodePath("..")
+HP = 50.0
+mesh = NodePath("MeshInstance3D")
+collision = NodePath("CollisionShape3D")
+metadata/_custom_type_script = "uid://djipt2jxjp1jm"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="torso" unique_id=2112058768]
+mesh = SubResource("BoxMesh_ag8xu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="torso" unique_id=1655699734]
+shape = SubResource("BoxShape3D_s7hy8")
+
+[node name="left arm" type="CharacterBody3D" parent="." unique_id=110391721 node_paths=PackedStringArray("oil_particles", "robot", "mesh", "collision")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.39938748, 0.09780362, 0)
+script = ExtResource("2_d45p8")
+member_type = 2
+oil_particles = NodePath("CPUParticles3D")
+robot = NodePath("..")
+mesh = NodePath("MeshInstance3D")
+collision = NodePath("CollisionShape3D")
+metadata/_custom_type_script = "uid://djipt2jxjp1jm"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="left arm" unique_id=1826929580]
+mesh = SubResource("BoxMesh_rom7f")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="left arm" unique_id=1252508680]
+shape = SubResource("BoxShape3D_83wnh")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="left arm" unique_id=198796765]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.11773735, 0.17882502, 0)
+emitting = false
+amount = 16
+mesh = SubResource("SphereMesh_28y7x")
+direction = Vector3(1, 1, 0)
+spread = 5.0
+initial_velocity_min = 2.0
+initial_velocity_max = 5.0
+scale_amount_curve = SubResource("Curve_jrfea")
+
+[node name="rigth arm" type="CharacterBody3D" parent="." unique_id=1512090269 node_paths=PackedStringArray("oil_particles", "robot", "mesh", "collision")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.399, 0.09780362, 0)
+script = ExtResource("2_d45p8")
+member_type = 2
+oil_particles = NodePath("CPUParticles3D")
+robot = NodePath("..")
+mesh = NodePath("MeshInstance3D")
+collision = NodePath("CollisionShape3D")
+metadata/_custom_type_script = "uid://djipt2jxjp1jm"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="rigth arm" unique_id=1219646168]
+mesh = SubResource("BoxMesh_rom7f")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="rigth arm" unique_id=430988754]
+shape = SubResource("BoxShape3D_83wnh")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="rigth arm" unique_id=1966445099]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07153505, 0.17882502, 0)
+emitting = false
+amount = 16
+mesh = SubResource("SphereMesh_28y7x")
+direction = Vector3(-1, 1, 0)
+spread = 5.0
+initial_velocity_min = 2.0
+initial_velocity_max = 5.0
+scale_amount_curve = SubResource("Curve_jrfea")
+
+[node name="left leg" type="CharacterBody3D" parent="." unique_id=1732436742 node_paths=PackedStringArray("oil_particles", "robot", "mesh", "collision")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15149266, -0.7324485, 0)
+script = ExtResource("2_d45p8")
+member_type = 3
+oil_particles = NodePath("CPUParticles3D")
+robot = NodePath("..")
+mesh = NodePath("MeshInstance3D")
+collision = NodePath("CollisionShape3D")
+metadata/_custom_type_script = "uid://djipt2jxjp1jm"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="left leg" unique_id=1366280102]
+mesh = SubResource("BoxMesh_bbghw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="left leg" unique_id=1224358815]
+shape = SubResource("BoxShape3D_w54tn")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="left leg" unique_id=1930607763]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.01955533, 0.29772842, 0)
+emitting = false
+amount = 16
+mesh = SubResource("SphereMesh_28y7x")
+direction = Vector3(1, -1, 0)
+spread = 5.0
+initial_velocity_min = 2.0
+initial_velocity_max = 5.0
+scale_amount_curve = SubResource("Curve_jrfea")
+
+[node name="rigth leg" type="CharacterBody3D" parent="." unique_id=1927240257 node_paths=PackedStringArray("oil_particles", "robot", "mesh", "collision")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.151, -0.732, 0)
+script = ExtResource("2_d45p8")
+member_type = 3
+oil_particles = NodePath("CPUParticles3D")
+robot = NodePath("..")
+mesh = NodePath("MeshInstance3D")
+collision = NodePath("CollisionShape3D")
+metadata/_custom_type_script = "uid://djipt2jxjp1jm"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="rigth leg" unique_id=664901698]
+mesh = SubResource("BoxMesh_bbghw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="rigth leg" unique_id=350968294]
+shape = SubResource("BoxShape3D_w54tn")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="rigth leg" unique_id=674473789]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.01955533, 0.29772842, 0)
+emitting = false
+amount = 16
+mesh = SubResource("SphereMesh_28y7x")
+direction = Vector3(-1, -1, 0)
+spread = 5.0
+initial_velocity_min = 2.0
+initial_velocity_max = 5.0
+scale_amount_curve = SubResource("Curve_jrfea")
+
+[node name="Label3D" type="Label3D" parent="." unique_id=1597982924]
+transform = Transform3D(-1, 0, 8.940697e-08, 0, 1, 0, -8.940697e-08, 0, -1, 0.028056711, 0.2228719, -0.15177953)
+pixel_size = 0.0025
+text = "oil"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1911484812]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.06204605, 0)
+shape = SubResource("BoxShape3D_d45p8")
+disabled = true
+
+[node name="Floor_ray" type="RayCast3D" parent="." unique_id=1340820259]

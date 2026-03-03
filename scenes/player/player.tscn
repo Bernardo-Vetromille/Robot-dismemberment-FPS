@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://b2wauforyx41q"]
+
+[ext_resource type="Script" uid="uid://da7gdva8rfstm" path="res://scripts/player/player.gd" id="1_8afob"]
+[ext_resource type="Script" uid="uid://crbuo3gca2p47" path="res://scripts/systems/camera_shake.gd" id="2_p47bc"]
+[ext_resource type="PackedScene" uid="uid://c2dpnguy3bkff" path="res://scenes/player/weapons/pistol.tscn" id="3_gmlin"]
+[ext_resource type="PackedScene" uid="uid://db7imn6nh8k0g" path="res://scenes/player/weapons/shotgun.tscn" id="4_lvxji"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_dovo2"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gmlin"]
+
+[node name="Player" type="CharacterBody3D" unique_id=1484227662 groups=["player"]]
+script = ExtResource("1_8afob")
+speed = null
+acceleration = null
+deceleration = null
+jump_force = null
+sensibility = null
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1717783014]
+mesh = SubResource("CapsuleMesh_dovo2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1062977961]
+shape = SubResource("CapsuleShape3D_gmlin")
+
+[node name="camera_mount" type="Node3D" parent="." unique_id=421257280]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5763469, 0)
+
+[node name="Camera3D" type="Camera3D" parent="camera_mount" unique_id=347638023]
+fov = 90.0
+script = ExtResource("2_p47bc")
+max_shake = 0.05
+
+[node name="pistol" parent="camera_mount" unique_id=1020744251 node_paths=PackedStringArray("bullets_label", "camera") instance=ExtResource("3_gmlin")]
+visible = false
+bullets_label = NodePath("../../CanvasLayer/Control/Label")
+camera = NodePath("../Camera3D")
+
+[node name="Shotgun" parent="camera_mount" unique_id=1677848092 node_paths=PackedStringArray("bullets_label", "camera") instance=ExtResource("4_lvxji")]
+bullets_label = NodePath("../../CanvasLayer/Control/Label")
+camera = NodePath("../Camera3D")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1362197434]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=330042869]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CanvasLayer/Control" unique_id=412997851]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -183.0
+offset_bottom = 88.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 64
+text = "Balas:"
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control" unique_id=1937296068]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.125
+offset_top = -2.125
+offset_right = 2.125
+offset_bottom = 2.125
+grow_horizontal = 2
+grow_vertical = 2

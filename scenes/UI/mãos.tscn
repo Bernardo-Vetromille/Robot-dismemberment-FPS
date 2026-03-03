@@ -1,0 +1,85 @@
+[gd_scene format=3 uid="uid://dub8lel1p52s0"]
+
+[ext_resource type="Texture2D" uid="uid://dpyi8rfcorqm4" path="res://assets/images/gun..png" id="1_3cvab"]
+[ext_resource type="Shader" uid="uid://bvljtalq016kj" path="res://assets/shaders/erosão.gdshader" id="1_iv3t8"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_iv3t8"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wh8dh"]
+noise = SubResource("FastNoiseLite_iv3t8")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wh8dh"]
+shader = ExtResource("1_iv3t8")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_wh8dh")
+shader_parameter/dissolve = 0.0
+shader_parameter/edge_size = 0.0400000019
+shader_parameter/edge_color = Color(1, 0.4, 0, 1)
+shader_parameter/emission_strength = 3.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wh8dh"]
+atlas = ExtResource("1_3cvab")
+region = Rect2(0, 64, 240, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iv3t8"]
+atlas = ExtResource("1_3cvab")
+region = Rect2(0, 224, 240, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pnsxu"]
+atlas = ExtResource("1_3cvab")
+region = Rect2(0, 360, 240, 40)
+
+[node name="Control" type="Control" unique_id=1469182275]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="arma" type="TextureRect" parent="." unique_id=293027817]
+material = SubResource("ShaderMaterial_wh8dh")
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = 48.0
+offset_right = 1914.0
+offset_bottom = 367.0
+grow_vertical = 2
+texture = SubResource("AtlasTexture_wh8dh")
+
+[node name="mão esquerda" type="TextureRect" parent="." unique_id=193467030]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = 221.0
+offset_right = 1914.0
+offset_bottom = 540.0
+grow_vertical = 2
+texture = SubResource("AtlasTexture_iv3t8")
+
+[node name="mão direita" type="TextureRect" parent="." unique_id=1877636060]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = 221.0
+offset_right = 1914.0
+offset_bottom = 540.0
+grow_vertical = 2
+texture = SubResource("AtlasTexture_pnsxu")
+
+[node name="mira central" type="ColorRect" parent="." unique_id=1370437131]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1.5
+offset_top = -1.5
+offset_right = 1.5
+offset_bottom = 1.5
+grow_horizontal = 2
+grow_vertical = 2
