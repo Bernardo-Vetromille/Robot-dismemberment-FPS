@@ -10,6 +10,9 @@ extends CharacterBody3D
 
 @onready var camera_mount: Node3D = $camera_mount
 
+@onready var pistol = $camera_mount/pistol
+@onready var shotgun = $camera_mount/Shotgun
+
 var real_speed: float
 var no_clip: bool = false
 
@@ -25,6 +28,7 @@ func _input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	movement(delta)
+	weapons()
 	if !no_clip:
 		gravity(delta)
 	
@@ -72,3 +76,16 @@ func gravity(d: float) -> void:
 	
 	if Input.is_action_pressed("jump") and is_on_floor():
 		velocity.y = jump_force
+
+func equip(weapon: Weapon3D):
+	var childs = $camera_mount.get_children()
+	for child in childs:
+		if child is Weapon3D:
+			if child != weapon: 
+				child.visible = false
+
+func weapons():
+	if Input.is_action_just_pressed("pistol"):
+		equip(pistol)
+	elif Input.is_action_just_pressed("shotgun"):
+		equip(shotgun)

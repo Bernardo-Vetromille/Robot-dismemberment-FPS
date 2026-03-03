@@ -3,11 +3,13 @@ class_name Robot3D
 
 @export var speed: float = 6.0
 @export var player: CharacterBody3D
+@export var nf_player: CharacterBody3D
 @export var oil: float = 100
 @export var label: Label3D
 @export var head: Member3D
 @export var floor_ray: RayCast3D
 @export var vision_ray: RayCast3D
+@export var vision_area: Area3D
 
 
 var base_speed: float
@@ -16,6 +18,9 @@ var has_torso: bool
 var legs: int
 var arms: int
 var heads: int
+
+var is_in_vision: bool = false
+
 
 var is_locked: bool = false
 
@@ -60,6 +65,7 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector3.ZERO
 	
 	gravity(delta)
+	vision()
 	search_player()
 	move_and_slide()
 
@@ -113,4 +119,21 @@ func start_stun():
 	$"rigth arm".rotation_degrees.x = 85
 	$"left arm".position.z = -0.5
 	$"rigth arm".position.z = -0.5
+
+var members_alive: int
+
+func vision():
+	var colliders = vision_area.get_overlapping_bodies()
+	if colliders.size() > 0:
+		for collider in colliders:
+			if collider.is_in_group("player"):
+				head.look_at(collider.global_position)
 	
+	var count := 0
+	for m in members:
+		if !m.destroyed:
+			count += 1
+	if members_alive > count:
+		head.look_at(nf_player.global_position)
+	
+	members_alive = count

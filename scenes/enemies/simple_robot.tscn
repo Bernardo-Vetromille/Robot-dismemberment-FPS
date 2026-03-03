@@ -42,13 +42,18 @@ size = Vector3(0.2, 0.6, 0.2)
 [sub_resource type="BoxShape3D" id="BoxShape3D_d45p8"]
 size = Vector3(1, 1.9829636, 1)
 
-[node name="SimpleRobot" type="CharacterBody3D" unique_id=1242831548 node_paths=PackedStringArray("label", "head", "floor_ray", "vision_ray")]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_d45p8"]
+height = 10.0
+radius = 1.0
+
+[node name="SimpleRobot" type="CharacterBody3D" unique_id=1242831548 node_paths=PackedStringArray("label", "head", "floor_ray", "vision_ray", "vision_area")]
 script = ExtResource("1_uak8l")
 oil = 25.0
-label = NodePath("Label3D")
+label = NodePath("torso/Label3D")
 head = NodePath("head")
 floor_ray = NodePath("Floor_ray")
 vision_ray = NodePath("head/vision_ray")
+vision_area = NodePath("Area3D")
 metadata/_custom_type_script = "uid://d2crmmkok43hf"
 
 [node name="head" type="CharacterBody3D" parent="." unique_id=1367062021 node_paths=PackedStringArray("oil_particles", "robot", "mesh", "collision")]
@@ -97,6 +102,11 @@ mesh = SubResource("BoxMesh_ag8xu")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="torso" unique_id=1655699734]
 shape = SubResource("BoxShape3D_s7hy8")
+
+[node name="Label3D" type="Label3D" parent="torso" unique_id=1597982924]
+transform = Transform3D(-1, 0, 8.940697e-08, 0, 1, 0, -8.940697e-08, 0, -1, 0.028056711, 0.2228719, -0.15177953)
+pixel_size = 0.0025
+text = "oil"
 
 [node name="left arm" type="CharacterBody3D" parent="." unique_id=110391721 node_paths=PackedStringArray("oil_particles", "robot", "mesh", "collision")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.39938748, 0.09780362, 0)
@@ -206,14 +216,16 @@ initial_velocity_min = 2.0
 initial_velocity_max = 5.0
 scale_amount_curve = SubResource("Curve_jrfea")
 
-[node name="Label3D" type="Label3D" parent="." unique_id=1597982924]
-transform = Transform3D(-1, 0, 8.940697e-08, 0, 1, 0, -8.940697e-08, 0, -1, 0.028056711, 0.2228719, -0.15177953)
-pixel_size = 0.0025
-text = "oil"
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1911484812]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.06204605, 0)
 shape = SubResource("BoxShape3D_d45p8")
 disabled = true
 
 [node name="Floor_ray" type="RayCast3D" parent="." unique_id=1340820259]
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1909411379]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.62168705, -1.0769091)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1884006042]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.0310903, 0.7097487)
+shape = SubResource("CylinderShape3D_d45p8")

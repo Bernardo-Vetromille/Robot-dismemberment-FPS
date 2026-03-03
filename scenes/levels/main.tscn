@@ -39,8 +39,8 @@ mesh = SubResource("BoxMesh_y0acb")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1438677334]
 shape = SubResource("BoxShape3D_j4d2a")
 
-[node name="Player" parent="." unique_id=1484227662 groups=["player"] instance=ExtResource("1_72ix8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+[node name="Player" parent="." unique_id=1484227662 instance=ExtResource("1_72ix8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8944262, 2, 0)
 
 [node name="ambient" type="Node3D" parent="." unique_id=1067890812]
 
@@ -63,5 +63,6 @@ mesh = SubResource("BoxMesh_72ix8")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" unique_id=1037938076]
 shape = SubResource("BoxShape3D_2vj2h")
 
-[node name="SimpleRobot" parent="." unique_id=807116497 instance=ExtResource("2_2vj2h")]
+[node name="SimpleRobot" parent="." unique_id=807116497 node_paths=PackedStringArray("nf_player") instance=ExtResource("2_2vj2h")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -0.14101744, 3.0982525, -2.0349827)
+nf_player = NodePath("../Player")
