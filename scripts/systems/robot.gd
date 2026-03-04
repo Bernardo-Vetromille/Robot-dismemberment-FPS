@@ -18,116 +18,102 @@ var has_torso: bool
 var legs: int
 var arms: int
 var heads: int
-
 var is_in_vision: bool = false
-
-
 var is_locked: bool = false
+
+enum States {
+	IDLE,
+	WALK,
+	JUMP,
+	CHASE,
+	ATTACK,
+	LOCK
+}
+
+var state: States = States.IDLE
 
 func _ready() -> void:
 	base_speed = speed
 	for child in get_children():
 		if child is Member3D:
 			members.append(child)
-#
+
 func _physics_process(delta: float) -> void:
-	label.text = "Oil: " + "%.1f" % oil
-	
-	has_torso = false
-	
-	for member in members:
-		if member.member_type == Member3D.MemberType.TORSO and !member.destroyed:
-			has_torso = true
-			break
-	
-	if !has_torso:
-		oil = 0.0
-		for member in members:
-			if member.member_type != Member3D.MemberType.LEG:
-				member.destroy()
-	
-	for member in members:
-		match member.member_type:
-			Member3D.MemberType.HEAD:
-				heads += 1
-			Member3D.MemberType.LEG:
-				legs += 1
-			Member3D.MemberType.ARM:
-				arms += 1
-	
-	if oil <= 0:
-		is_locked = true
-	
-	if !is_locked:
-		movement(delta)
-		uptade_speed()
-	else:
-		velocity = Vector3.ZERO
 	
 	gravity(delta)
-	vision()
-	search_player()
+	
+	match state:
+		States.IDLE:
+			idle_behavior()
+		States.WALK:
+			walk_behavior()
+		States.CHASE:
+			chase_behavior()
+
 	move_and_slide()
 
-func movement(delta):
+func idle_behavior():
+	search_player()
 	if player:
-		var dir = (player.global_position - global_position).normalized()
-		velocity.x = dir.x * speed
-		velocity.z = dir.z * speed
-		head.look_at(player.global_position)
-		
-		var target_position = player.global_transform.origin
-		# Mantém a altura atual do robô (y) para não olhar pra cima ou pra baixo
-		target_position.y = global_transform.origin.y
-		look_at(target_position, Vector3.UP)
+		state = States.CHASE
+	else: 
+		await get_tree().create_timer(1).timeout
+		state = States.WALK
 	
+
+func walk_behavior():
+	var dir = randi_range(0, 4)
+	
+	if dir == 0:
+		rotate_y(deg_to_rad(90))
+		velocity.z = speed
+		await get_tree().create_timer(1).timeout
+	elif dir == 1:
+		rotate_y(deg_to_rad(180))
+		velocity.z = speed
+		await get_tree().create_timer(1).timeout
+	elif dir == 2:
+		rotate_y(deg_to_rad(260))
+		velocity.z = speed
+		await get_tree().create_timer(1).timeout
+	elif dir == 3:
+		rotate_y(deg_to_rad(360))
+		velocity.z = speed
+		await get_tree().create_timer(1).timeout
+	
+	
+	state = States.IDLE
+
+func chase_behavior():
+	look_at(player.global_position)
+	head.look_at(player.global_position)
+	global_rotation.x = 0.0
+	
+	var dir = (player.global_position - global_position).normalized()
+	velocity.x = dir.x * speed
+	velocity.z = dir.z * speed
+
+func jump_behavior():
+	pass
+
+func attack_behavior():
+	pass
+
+func lock_behavior():
+	pass
+
+func search_player():
+	var colliders = vision_area.get_overlapping_bodies()
+	
+	if colliders:
+		for collider in colliders: 
+			if collider.is_in_group("player"):
+				head.look_at(collider.global_position)
+				player = collider
+
 func gravity(delta):
 	floor_ray.force_raycast_update()
 	if floor_ray.is_colliding():
-		velocity.y = 0.0
+		velocity.y = 0
 	else:
 		velocity += get_gravity() * delta
-	
-func uptade_speed(): 
-	var legs := get_alive_legs()
-	if legs == 2:
-		speed = base_speed
-	elif legs == 1:
-		speed = base_speed * 0.5
-	else:
-		start_stun()
-		speed = 0.2
-
-func get_alive_legs() -> int:
-	var count := 0
-	for m in members:
-		if m.member_type == Member3D.MemberType.LEG and not m.destroyed:
-			count += 1
-	return count
-
-func search_player():
-	vision_ray.force_raycast_update()
-	if vision_ray.is_colliding():
-		if vision_ray.get_collider().is_in_group("player"):
-			player = vision_ray.get_collider()
-
-func start_stun():
-	floor_ray.target_position = Vector3(0,-0.4,0)
-	$torso.rotation_degrees.x = -85
-	$head.position = Vector3(0.0, 0.124, -0.577)
-	$"left arm".rotation_degrees.x = 85
-	$"rigth arm".rotation_degrees.x = 85
-	$"left arm".position.z = -0.5
-	$"rigth arm".position.z = -0.5
-
-var members_alive: int
-
-func vision():
-	var colliders = vision_area.get_overlapping_bodies()
-	if colliders.size() > 0:
-		for collider in colliders:
-			if collider.is_in_group("player"):
-				head.look_at(collider.global_position)
-	
-	if look_at_player:
-		head.look_at(nf_player.global_position)

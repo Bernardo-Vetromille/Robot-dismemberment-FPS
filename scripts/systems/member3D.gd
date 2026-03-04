@@ -4,7 +4,11 @@ class_name Member3D
 enum MemberType {
 	HEAD,
 	TORSO,
+	SPINE,
+	SHOULDER,
 	ARM,
+	FOREARM,
+	THIGH,
 	LEG
 }
 

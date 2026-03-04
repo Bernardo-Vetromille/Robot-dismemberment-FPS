@@ -50,7 +50,7 @@ func fire_rate_time():
 	can_shoot = true
 
 func fire():
-	if can_shoot:
+	if can_shoot and !reloading:
 		if animation_player:
 			animation_player.play("shoot")
 		camera.trigger_shake()

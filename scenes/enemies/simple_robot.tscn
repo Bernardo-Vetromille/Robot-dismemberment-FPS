@@ -111,7 +111,7 @@ text = "oil"
 [node name="left arm" type="CharacterBody3D" parent="." unique_id=110391721 node_paths=PackedStringArray("oil_particles", "robot", "mesh", "collision")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.39938748, 0.09780362, 0)
 script = ExtResource("2_d45p8")
-member_type = 2
+member_type = 4
 oil_particles = NodePath("CPUParticles3D")
 robot = NodePath("..")
 mesh = NodePath("MeshInstance3D")
@@ -138,7 +138,7 @@ scale_amount_curve = SubResource("Curve_jrfea")
 [node name="rigth arm" type="CharacterBody3D" parent="." unique_id=1512090269 node_paths=PackedStringArray("oil_particles", "robot", "mesh", "collision")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.399, 0.09780362, 0)
 script = ExtResource("2_d45p8")
-member_type = 2
+member_type = 4
 oil_particles = NodePath("CPUParticles3D")
 robot = NodePath("..")
 mesh = NodePath("MeshInstance3D")
@@ -165,7 +165,7 @@ scale_amount_curve = SubResource("Curve_jrfea")
 [node name="left leg" type="CharacterBody3D" parent="." unique_id=1732436742 node_paths=PackedStringArray("oil_particles", "robot", "mesh", "collision")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15149266, -0.7324485, 0)
 script = ExtResource("2_d45p8")
-member_type = 3
+member_type = 7
 oil_particles = NodePath("CPUParticles3D")
 robot = NodePath("..")
 mesh = NodePath("MeshInstance3D")
@@ -192,7 +192,7 @@ scale_amount_curve = SubResource("Curve_jrfea")
 [node name="rigth leg" type="CharacterBody3D" parent="." unique_id=1927240257 node_paths=PackedStringArray("oil_particles", "robot", "mesh", "collision")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.151, -0.732, 0)
 script = ExtResource("2_d45p8")
-member_type = 3
+member_type = 7
 oil_particles = NodePath("CPUParticles3D")
 robot = NodePath("..")
 mesh = NodePath("MeshInstance3D")
