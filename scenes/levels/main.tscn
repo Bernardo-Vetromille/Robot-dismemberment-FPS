@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b2wauforyx41q" path="res://scenes/player/player.tscn" id="1_72ix8"]
 [ext_resource type="PackedScene" uid="uid://cbu18dyr6x63t" path="res://scenes/enemies/simple_robot.tscn" id="2_2vj2h"]
+[ext_resource type="Shader" uid="uid://bvljtalq016kj" path="res://assets/shaders/erosão.gdshader" id="3_y0acb"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2vj2h"]
 albedo_color = Color(0.11119685, 0.11119684, 0.11119684, 1)
@@ -27,6 +28,26 @@ adjustment_saturation = 1.4
 [sub_resource type="BoxMesh" id="BoxMesh_72ix8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2vj2h"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_j4d2a"]
+noise_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_u81e1"]
+noise = SubResource("FastNoiseLite_j4d2a")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b6bv0"]
+render_priority = 0
+shader = ExtResource("3_y0acb")
+shader_parameter/base_color = Color(0.2648381, 0.4801718, 0.9879758, 1)
+shader_parameter/inside_color = Color(0.74138474, 0.7413847, 0.74138457, 1)
+shader_parameter/progress = 0.0
+shader_parameter/glow_color = Color(0.7727396, 0.45198447, 1.1551381e-06, 1)
+shader_parameter/glow_intensity = 5.0
+shader_parameter/glow_border_width = 0.05
+shader_parameter/glow_border_smoothness = 0.04
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_u81e1")
+
+[sub_resource type="SphereMesh" id="SphereMesh_ubwgw"]
 
 [node name="Main" type="Node3D" unique_id=451952222]
 
@@ -66,3 +87,8 @@ shape = SubResource("BoxShape3D_2vj2h")
 [node name="SimpleRobot" parent="." unique_id=807116497 node_paths=PackedStringArray("nf_player") instance=ExtResource("2_2vj2h")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -0.14101744, 3.0982525, -2.0349827)
 nf_player = NodePath("../Player")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=441594074]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.728946, 2.8336995, 0)
+material_override = SubResource("ShaderMaterial_b6bv0")
+mesh = SubResource("SphereMesh_ubwgw")
